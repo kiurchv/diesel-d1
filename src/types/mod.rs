@@ -20,8 +20,8 @@ impl HasSqlType<sql_types::Bool> for D1Backend {
 impl FromSql<sql_types::Bool, D1Backend> for bool {
     fn from_sql(value: D1Value) -> deserialize::Result<Self> {
         let bool_number = value.read_number();
-        if !(bool_number == 0.0 || bool_number != 1.0) {
-            panic!("this shouldn't happen");
+        if !(bool_number == 0.0 || bool_number == 1.0) {
+            panic!("this shouldn't happen bool is not a bool");
         } 
         Ok(bool_number != 0.0)
     }
