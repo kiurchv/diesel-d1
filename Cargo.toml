@@ -4,6 +4,8 @@ version = "0.1.0"
 edition = "2021"
 authors = ["Luís Duarte <lduarte@cloudflare.com>"]
 license-file = "LICENSE"
+homepage = "https://github.com/LuisDuarte1/diesel-d1"
+description = "A Diesel Backend/Connection for Cloudflare D1."
 
 [dependencies]
 async-trait = "0.1.83"
