@@ -1,0 +1,18 @@
+[package]
+name = "diesel-d1"
+version = "0.1.0"
+edition = "2021"
+authors = ["Luís Duarte <lduarte@cloudflare.com>"]
+license-file = "LICENSE"
+
+[dependencies]
+async-trait = "0.1.83"
+diesel = { version = "2.2.6", features = [
+    "i-implement-a-third-party-backend-and-opt-into-breaking-changes"
+] }
+diesel-async = "0.5.2"
+futures-util = "0.3.31"
+js-sys = "0.3.74"
+wasm-bindgen = "0.2.97"
+wasm-bindgen-futures = "0.4.49"
+worker = { version = "0.4.2"}
