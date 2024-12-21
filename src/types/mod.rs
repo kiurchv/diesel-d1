@@ -1,3 +1,5 @@
+mod date_and_time;
+
 use diesel::{
     deserialize::{self, FromSql},
     serialize::{self, IsNull, Output, ToSql},
@@ -22,7 +24,7 @@ impl FromSql<sql_types::Bool, D1Backend> for bool {
         let bool_number = value.read_number();
         if !(bool_number == 0.0 || bool_number == 1.0) {
             panic!("this shouldn't happen bool is not a bool");
-        } 
+        }
         Ok(bool_number != 0.0)
     }
 }
@@ -199,55 +201,5 @@ impl ToSql<sql_types::Binary, D1Backend> for *const [u8] {
         let value = unsafe { js_sys::Uint8Array::new(&Uint8Array::view(self.as_ref().unwrap())) };
         out.set_value(value);
         Ok(IsNull::No)
-    }
-}
-
-// ------ Time related (simplified to only text)
-
-impl HasSqlType<sql_types::Date> for D1Backend {
-    fn metadata(_lookup: &mut ()) -> D1Type {
-        D1Type::Text
-    }
-}
-
-impl HasSqlType<sql_types::Time> for D1Backend {
-    fn metadata(_lookup: &mut ()) -> D1Type {
-        D1Type::Text
-    }
-}
-
-impl HasSqlType<sql_types::Timestamp> for D1Backend {
-    fn metadata(_lookup: &mut ()) -> D1Type {
-        D1Type::Text
-    }
-}
-
-impl FromSql<sql_types::Date, D1Backend> for String {
-    fn from_sql(value: D1Value) -> deserialize::Result<Self> {
-        FromSql::<sql_types::Text, D1Backend>::from_sql(value)
-    }
-}
-
-impl ToSql<sql_types::Date, D1Backend> for String {
-    fn to_sql<'b>(&'b self, out: &mut Output<'b, '_, D1Backend>) -> serialize::Result {
-        ToSql::<sql_types::Text, D1Backend>::to_sql(self, out)
-    }
-}
-
-impl FromSql<sql_types::Time, D1Backend> for String {
-    fn from_sql(value: D1Value) -> deserialize::Result<Self> {
-        FromSql::<sql_types::Text, D1Backend>::from_sql(value)
-    }
-}
-
-impl FromSql<sql_types::Timestamp, D1Backend> for String {
-    fn from_sql(value: D1Value) -> deserialize::Result<Self> {
-        FromSql::<sql_types::Text, D1Backend>::from_sql(value)
-    }
-}
-
-impl ToSql<sql_types::Timestamp, D1Backend> for String {
-    fn to_sql<'b>(&'b self, out: &mut Output<'b, '_, D1Backend>) -> serialize::Result {
-        ToSql::<sql_types::Text, D1Backend>::to_sql(self, out)
     }
 }
